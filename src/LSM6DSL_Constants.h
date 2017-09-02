@@ -14,6 +14,9 @@
 #define LSM6DSL_ACC_GYRO_OUTZ_L_XL_REG			0x2C
 #define LSM6DSL_ACC_GYRO_OUTZ_H_XL_REG			0x2D
 
+#define LSM6DSL_ACC_GYRO_OUT_L_TEMP_REG			0x20
+#define LSM6DSL_ACC_GYRO_OUT_H_TEMP_REG			0x21
+
 
 /** enums */
 typedef enum {

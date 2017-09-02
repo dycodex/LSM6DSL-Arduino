@@ -75,6 +75,10 @@ public:
 
 	lsm6dsl_status_t begin();
 
+	int16_t readRawTemperature();
+	float readTemperatureC();
+	float readTemperatureF();
+
 	int16_t readRawAccelX();
 	int16_t readRawAccelY();
 	int16_t readRawAccelZ();

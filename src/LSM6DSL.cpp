@@ -87,8 +87,9 @@ lsm6dsl_status_t LSM6DSLCore::readRegisterInt16(int16_t* output, uint8_t offsetL
     }
 
     int16_t out = 0;
-    Wire.requestFrom(i2cAddress, nBytes);
     uint8_t i = 0;
+
+    Wire.requestFrom(i2cAddress, nBytes);
     while (Wire.available()) {
         out = (out << (i * 8)) | (int16_t)Wire.read();
         i++;
@@ -270,21 +271,20 @@ lsm6dsl_status_t LSM6DSL::begin() {
 
 int16_t LSM6DSL::readRawAccelX() {
     int16_t result = 0;
-    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUTX_L_XL_REG, LSM6DSL_ACC_GYRO_OUTX_H_XL_REG);
+    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUTX_L_XL_REG);
 
     return result;
 }
 
 int16_t LSM6DSL::readRawAccelY() {
     int16_t result = 0;
-    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUTY_L_XL_REG, LSM6DSL_ACC_GYRO_OUTY_H_XL_REG);
-
+    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUTY_L_XL_REG);
     return result;
 }
 
 int16_t LSM6DSL::readRawAccelZ() {
     int16_t result = 0;
-    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUTZ_L_XL_REG, LSM6DSL_ACC_GYRO_OUTZ_H_XL_REG);
+    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUTZ_L_XL_REG);
 
     return result;
 }
@@ -302,6 +302,25 @@ float LSM6DSL::readFloatAccelZ() {
 }
 
 float LSM6DSL::convertAccel(int16_t axisValue) {
-    float output = (float)axisValue * 0.061 * (settings.accelRange >> 1) / 1000;
+    float sens = 0.031 * settings.accelRange;
+    float output = (float)axisValue * sens / 1000;
     return output;
+}
+
+int16_t LSM6DSL::readRawTemperature() {
+    int16_t result;
+    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUT_L_TEMP_REG);
+
+    return result;
+}
+
+float LSM6DSL::readTemperatureC() {
+    float output = (float)(readRawTemperature()) / 256;
+    output += 25;
+
+    return output;
+}
+
+float LSM6DSL::readTemperatureF() {
+    return (readTemperatureC() * 9) / (5 + 32);
 }
