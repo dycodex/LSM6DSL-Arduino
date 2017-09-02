@@ -83,11 +83,20 @@ public:
 	int16_t readRawAccelY();
 	int16_t readRawAccelZ();
 
+	int16_t readRawGyroX();
+	int16_t readRawGyroY();
+	int16_t readRawGyroZ();
+
 	float readFloatAccelX();
 	float readFloatAccelY();
 	float readFloatAccelZ();
 
+	float readFloatGyroX();
+	float readFloatGyroY();
+	float readFloatGyroZ();
+
 	float convertAccel(int16_t axisValue);
+	float convertGyro(int16_t axisValue);
 };
 
 #endif

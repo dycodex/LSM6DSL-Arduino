@@ -324,3 +324,46 @@ float LSM6DSL::readTemperatureC() {
 float LSM6DSL::readTemperatureF() {
     return (readTemperatureC() * 9) / 5 + 32;
 }
+
+int16_t LSM6DSL::readRawGyroX() {
+    int16_t output;
+    readRegisterInt16(&output, LSM6DSL_ACC_GYRO_OUTX_L_G_REG);
+
+    return output;
+}
+
+int16_t LSM6DSL::readRawGyroY() {
+    int16_t output;
+    readRegisterInt16(&output, LSM6DSL_ACC_GYRO_OUTY_L_G_REG);
+
+    return output;
+}
+
+int16_t LSM6DSL::readRawGyroZ() {
+    int16_t output;
+    readRegisterInt16(&output, LSM6DSL_ACC_GYRO_OUTZ_L_G_REG);
+
+    return output;
+}
+
+float LSM6DSL::readFloatGyroX() {
+    return convertGyro(readRawGyroX());
+}
+
+float LSM6DSL::readFloatGyroY() {
+    return convertGyro(readRawGyroY());
+}
+
+float LSM6DSL::readFloatGyroZ() {
+    return convertGyro(readRawGyroZ());
+}
+
+
+float LSM6DSL::convertGyro(int16_t axisValue) {
+    uint8_t divisor = settings.gyroRange / 125;
+    if (settings.gyroRange == 245) {
+        divisor = 2;
+    }
+
+    return (float)(axisValue) * 4.375 * divisor / 1000;
+}
