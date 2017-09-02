@@ -322,5 +322,5 @@ float LSM6DSL::readTemperatureC() {
 }
 
 float LSM6DSL::readTemperatureF() {
-    return (readTemperatureC() * 9) / (5 + 32);
+    return (readTemperatureC() * 9) / 5 + 32;
 }
