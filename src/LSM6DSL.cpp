@@ -75,6 +75,29 @@ lsm6dsl_status_t LSM6DSLCore::readRegisterInt16(int16_t* output, uint8_t offset)
     return returnStatus;
 }
 
+lsm6dsl_status_t LSM6DSLCore::readRegisterInt16(int16_t* output, uint8_t offsetL, uint8_t offsetM) {
+    lsm6dsl_status_t returnStatus = IMU_SUCCESS;
+    uint8_t nBytes = 2;
+
+    Wire.beginTransmission(i2cAddress);
+    Wire.write(offsetM);
+    Wire.write(offsetL);
+    if (Wire.endTransmission() != 0) {
+        returnStatus = IMU_HW_ERROR;
+    }
+
+    int16_t out = 0;
+    Wire.requestFrom(i2cAddress, nBytes);
+    uint8_t i = 0;
+    while (Wire.available()) {
+        out = (out << (i * 8)) | (int16_t)Wire.read();
+        i++;
+    }
+
+    *output = out;
+    return returnStatus;
+}
+
 lsm6dsl_status_t LSM6DSLCore::writeRegister(uint8_t offset, uint8_t data) {
     lsm6dsl_status_t returnStatus = IMU_SUCCESS;
 
@@ -133,7 +156,7 @@ lsm6dsl_status_t LSM6DSL::begin() {
 
     data = 0;
     if (settings.accelEnabled == 1) {
-        if (settings.accelSampleRate > 0x02) {
+        if (settings.accelSampleRate >= 1660) {
             data |= 0x01;
         }
 
@@ -186,9 +209,6 @@ lsm6dsl_status_t LSM6DSL::begin() {
                 data |= LSM6DSL_ACC_GYRO_ODR_XL_6660Hz;
                 break;;
         }
-
-        data |= settings.accelRange;
-        data |= settings.accelSampleRate;
     }
 
     writeRegister(LSM6DSL_ACC_GYRO_CTRL1_XL_REG, data);
@@ -246,4 +266,42 @@ lsm6dsl_status_t LSM6DSL::begin() {
     writeRegister(LSM6DSL_ACC_GYRO_CTRL2_G_REG, data);
 
     return returnStatus;
+}
+
+int16_t LSM6DSL::readRawAccelX() {
+    int16_t result = 0;
+    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUTX_L_XL_REG, LSM6DSL_ACC_GYRO_OUTX_H_XL_REG);
+
+    return result;
+}
+
+int16_t LSM6DSL::readRawAccelY() {
+    int16_t result = 0;
+    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUTY_L_XL_REG, LSM6DSL_ACC_GYRO_OUTY_H_XL_REG);
+
+    return result;
+}
+
+int16_t LSM6DSL::readRawAccelZ() {
+    int16_t result = 0;
+    readRegisterInt16(&result, LSM6DSL_ACC_GYRO_OUTZ_L_XL_REG, LSM6DSL_ACC_GYRO_OUTZ_H_XL_REG);
+
+    return result;
+}
+
+float LSM6DSL::readFloatAccelX() {
+    return convertAccel(readRawAccelX());
+}
+
+float LSM6DSL::readFloatAccelY() {
+    return convertAccel(readRawAccelY());
+}
+
+float LSM6DSL::readFloatAccelZ() {
+    return convertAccel(readRawAccelZ());
+}
+
+float LSM6DSL::convertAccel(int16_t axisValue) {
+    float output = (float)axisValue * 0.061 * (settings.accelRange >> 1) / 1000;
+    return output;
 }

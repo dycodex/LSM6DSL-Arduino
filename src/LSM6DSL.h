@@ -24,7 +24,8 @@ public:
 
     lsm6dsl_status_t beginCore();
 	lsm6dsl_status_t readRegister(uint8_t* output, uint8_t offset);
-    lsm6dsl_status_t readRegisterRegion(uint8_t*output, uint8_t offset, uint8_t length);
+	lsm6dsl_status_t readRegisterRegion(uint8_t* output, uint8_t offset, uint8_t length);
+	lsm6dsl_status_t readRegisterInt16(int16_t* output, uint8_t offsetL, uint8_t offsetM);
     lsm6dsl_status_t readRegisterInt16(int16_t* output, uint8_t offset);
     lsm6dsl_status_t writeRegister(uint8_t offset, uint8_t data);
     lsm6dsl_status_t embeddedPage();
@@ -72,7 +73,17 @@ public:
     LSM6DSL(uint8_t address = 0x6B);
     ~LSM6DSL() = default;
 
-    lsm6dsl_status_t begin();
+	lsm6dsl_status_t begin();
+
+	int16_t readRawAccelX();
+	int16_t readRawAccelY();
+	int16_t readRawAccelZ();
+
+	float readFloatAccelX();
+	float readFloatAccelY();
+	float readFloatAccelZ();
+
+	float convertAccel(int16_t axisValue);
 };
 
 #endif
