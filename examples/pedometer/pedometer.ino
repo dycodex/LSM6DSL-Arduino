@@ -1,13 +1,18 @@
 #include <Arduino.h>
+#include <Wire.h>
 #include <LSM6DSL.h>
 
-LSM6DSL imu;
+LSM6DSLCore imu;
 
 void setup() {
     Serial.begin(9600);
     delay(2000);
 
     Serial.println("Start!");
+
+    if (imu.beginCore() != IMU_SUCCESS) {
+        Serial.println("Failed initializing IMU sensor");
+    }
 
     uint8_t errorAccumulator = 0;
     uint8_t dataToWrite = 0;

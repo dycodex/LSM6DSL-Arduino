@@ -145,14 +145,10 @@ LSM6DSLCore(address) {
 	settings.fifoThreshold = 3000;
 	settings.fifoSampleRate = 10;
 	settings.fifoModeWord = 0;
-
-	// allOnesCounter = 0;
-	// nonSuccessCounter = 0;
 }
 
 lsm6dsl_status_t LSM6DSL::begin() {
     uint8_t data = 0;
-    uint8_t bwData = 0;
     lsm6dsl_status_t returnStatus = beginCore();
 
     data = 0;
