@@ -1,0 +1,19 @@
+{
+  "name": "LSM6DSL",
+  "version": "1.0.0-rc",
+  "frameworks": "arduino",
+  "platforms": "espressif8266,espressif32,atmelsam,atmelavr",
+  "keywords": "LSM6DSL,IMU,I2C",
+  "description": "Library for reading IMU sensor LSM6DSL with Arduino framework",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dycodex/LSM6DSL-Arduino.git"
+  },
+  "authors": [
+    {
+      "name": "Alwin Arrasyid",
+      "email": "alwin.ridd@gmail.com",
+      "maintainer": true
+    }
+  ]
+}

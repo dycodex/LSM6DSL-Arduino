@@ -125,26 +125,26 @@ lsm6dsl_status_t LSM6DSLCore::basePage() {
 
 LSM6DSL::LSM6DSL(uint8_t address):
 LSM6DSLCore(address) {
-	settings.gyroEnabled = 1;
-	settings.gyroRange = 2000;
-	settings.gyroSampleRate = 416;
-	settings.gyroFifoEnabled = 1;
-	settings.gyroFifoDecimation = 1;
+    settings.gyroEnabled = 1;
+    settings.gyroRange = 2000;
+    settings.gyroSampleRate = 416;
+    settings.gyroFifoEnabled = 1;
+    settings.gyroFifoDecimation = 1;
 
-	settings.accelEnabled = 1;
-	settings.accelODROff = 1;
-	settings.accelRange = 16;
-	settings.accelSampleRate = 416;
-	settings.accelBandWidth = 100;
-	settings.accelFifoEnabled = 1;
-	settings.accelFifoDecimation = 1;
+    settings.accelEnabled = 1;
+    settings.accelODROff = 1;
+    settings.accelRange = 16;
+    settings.accelSampleRate = 416;
+    settings.accelBandWidth = 100;
+    settings.accelFifoEnabled = 1;
+    settings.accelFifoDecimation = 1;
 
-	settings.tempEnabled = 1;
+    settings.tempEnabled = 1;
 
-	//FIFO control data
-	settings.fifoThreshold = 3000;
-	settings.fifoSampleRate = 10;
-	settings.fifoModeWord = 0;
+    //FIFO control data
+    settings.fifoThreshold = 3000;
+    settings.fifoSampleRate = 10;
+    settings.fifoModeWord = 0;
 }
 
 lsm6dsl_status_t LSM6DSL::begin() {
