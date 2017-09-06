@@ -37,6 +37,9 @@
 #define LSM6DSL_ACC_GYRO_MD1_CFG                0x5E
 #define LSM6DSL_ACC_GYRO_MD2_CFG                0x5F
 #define LSM6DSL_ACC_GYRO_WAKE_UP_SRC            0x1B
+#define LSM6DSL_ACC_GYRO_TAP_THS_6D             0x59
+#define LSM6DSL_ACC_GYRO_INT_DUR2               0x5A
+#define LSM6DSL_ACC_GYRO_WAKE_UP_THS            0x5B
 
 /** enums */
 typedef enum {

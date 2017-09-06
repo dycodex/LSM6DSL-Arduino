@@ -21,6 +21,7 @@ void setup() {
 	dataToWrite = 0;
 	dataToWrite |= LSM6DSL_ACC_GYRO_FS_XL_2g;
 	dataToWrite |= LSM6DSL_ACC_GYRO_ODR_G_416Hz;
+	errorAccumulator += imu.writeRegister(LSM6DSL_ACC_GYRO_CTRL1_XL_REG, dataToWrite);
 
 	errorAccumulator += imu.writeRegister(LSM6DSL_ACC_GYRO_WAKE_UP_DUR, 0x00);
 
