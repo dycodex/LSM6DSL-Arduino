@@ -2,7 +2,7 @@
 #include <Wire.h>
 #include <LSM6DSL.h>
 
-LSM6DSLCore imu;
+LSM6DSLCore imu(0x6B);
 
 void setup() {
     Serial.begin(9600);

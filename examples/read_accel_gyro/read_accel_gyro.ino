@@ -8,7 +8,7 @@ void setup() {
     Serial.begin(9600);
     delay(2000);
 
-    Serial.println("It starts!")
+    Serial.println("It starts!");
 
     if (!imu.begin()) {
         Serial.println("Failed initializing LSM6DSL");

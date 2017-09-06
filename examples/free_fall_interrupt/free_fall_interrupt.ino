@@ -2,7 +2,7 @@
 #include <Wire.h>
 #include <LSM6DSL.h>
 
-LSM6DSLCore imu;
+LSM6DSLCore imu(0x6B);
 
 void setup() {
 	Serial.begin(9600);
@@ -42,18 +42,15 @@ void setup() {
 }
 
 void loop() {
-	uint8_t read = 0;
-	uint16_t stepTaken = 0;
+	uint8_t readDataByte = 0;
 
-	// read the step count from the register
-	imu.readRegister(&read, LSM6DSL_ACC_GYRO_STEP_COUNTER_H);
-	stepTaken = ((uint16_t)read << 8);
-
-	imu.readRegister(&read, LSM6DSL_ACC_GYRO_STEP_COUNTER_L);
-	stepTaken |= read;
-
-	Serial.print("Step taken: ");
-	Serial.println(stepTaken);
-
-	delay(1000);
+	//Read the wake-up source register
+	imu.readRegister(&readDataByte, LSM6DSL_ACC_GYRO_WAKE_UP_SRC);
+	//Mask off the FF_IA bit for free-fall detection
+	readDataByte &= 0x20;
+	//Check for free-fall
+    if(readDataByte) {
+		delay(10);
+		Serial.println("Interrupt caught.  Free fall detected.");
+	}
 }
