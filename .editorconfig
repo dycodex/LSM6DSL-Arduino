@@ -1,4 +1,4 @@
-[*.{c,cpp,h,hpp}]
+[*.{c,cpp,h,hpp,ino}]
 indent_size = 4
 indent_style = space
 trim_trailing_whitespace = true

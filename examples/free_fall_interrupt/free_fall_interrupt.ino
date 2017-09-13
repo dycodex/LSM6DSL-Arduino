@@ -35,8 +35,8 @@ void setup() {
 	// route to INT2 as well
 	errorAccumulator += imu.writeRegister(LSM6DSL_ACC_GYRO_MD2_CFG, 0x10);
 
-	// Latch interrupt
-	errorAccumulator += imu.writeRegister(LSM6DSL_ACC_GYRO_TAP_CFG, 0x01);
+	// Latch interrupt & enable interrupt
+	errorAccumulator += imu.writeRegister(LSM6DSL_ACC_GYRO_TAP_CFG, 0x81);
 
 
 	// you can attach an interrupt handler here
