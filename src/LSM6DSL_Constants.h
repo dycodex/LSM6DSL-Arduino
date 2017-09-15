@@ -40,6 +40,7 @@
 #define LSM6DSL_ACC_GYRO_TAP_THS_6D             0x59
 #define LSM6DSL_ACC_GYRO_INT_DUR2               0x5A
 #define LSM6DSL_ACC_GYRO_WAKE_UP_THS            0x5B
+#define LSM6DSL_ACC_GYRO_FUNC_SRC1              0x53
 
 /** enums */
 typedef enum {
