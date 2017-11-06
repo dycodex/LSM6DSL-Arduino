@@ -2,8 +2,18 @@
 #define LSM6DSL_LIBRARY_H
 
 #include <Wire.h>
+#include <SPI.h>
 #include <stdint.h>
 #include "LSM6DSL_Constants.h"
+
+/**
+ * LSM6DSL operation mode enum
+ *
+ */
+typedef enum {
+    LSM6DSL_MODE_I2C,
+    LSM6DSL_MODE_SPI
+} lsm6dsl_mode_t;
 
 /**
  * LSM6DSL status enum
@@ -19,6 +29,7 @@ typedef enum {
 
 class LSM6DSLCore {
 public:
+    LSM6DSLCore(lsm6dsl_mode_t operationMode, uint8_t arg);
     LSM6DSLCore(uint8_t addr);
     ~LSM6DSLCore() = default;
 
@@ -32,7 +43,9 @@ public:
     lsm6dsl_status_t basePage();
 
 private:
+    lsm6dsl_mode_t opMode;
     uint8_t i2cAddress;
+    uint8_t slaveSelect;
 };
 
 struct SensorSettings {
@@ -71,6 +84,7 @@ public:
     SensorSettings settings;
 
     LSM6DSL(uint8_t address = 0x6B);
+    LSM6DSL(lsm6dsl_mode_t mode = LSM6DSL_MODE_I2C, uint8_t arg = 0x6B);
     ~LSM6DSL() = default;
 
     lsm6dsl_status_t begin();
@@ -97,6 +111,9 @@ public:
 
     float convertAccel(int16_t axisValue);
     float convertGyro(int16_t axisValue);
+
+private:
+    void initSettings();
 };
 
 #endif

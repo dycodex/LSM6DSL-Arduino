@@ -5,7 +5,7 @@ Library for reading data from IMU sensor and is influenced by [LSM6DS3 library b
 
 ### Supported Communication Protocol
 
-I2C is the only communication protocol supported by this library. We plan to add support for SPI as well.
+Both SPI and I2C protocol is supported by this library.
 
 ### Usage
 

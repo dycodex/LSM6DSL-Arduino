@@ -2,7 +2,11 @@
 #include <Wire.h>
 #include <LSM6DSL.h>
 
-LSM6DSLCore imu(0x6B);
+// Uncomment this line for SPI mode. Assign the correct chip select pin to the constructor.
+// LSM6DSLCore imu(LSM6DSL_MODE_SPI, 33);
+
+// Using I2C mode by default.
+LSM6DSLCore imu(LSM6DSL_MODE_I2C, 0x6B);
 
 void setup() {
     Serial.begin(9600);
